@@ -7,11 +7,13 @@
 // Valid expressions are one of:
 // 	INT PLUS INT
 // 	INT MINUS INT
+// 	INT DIVIDE INT
+// 	INT MULTIPLY INT
 
 const readline = require('readline')
 
 
-// A token is an integer, a plus sign, a minus sign, or end-of-file
+// Token Types
 const INT = 'INT',
 	PLUS = '+',
 	MINUS = '-',
