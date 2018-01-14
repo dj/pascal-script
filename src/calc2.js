@@ -13,13 +13,23 @@ const readline = require('readline')
 
 // A token is an integer, a plus sign, a minus sign, or end-of-file
 const INT = 'INT',
-	PLUS = 'PLUS',
-	MINUS = 'MINUS'
+	PLUS = '+',
+	MINUS = '-',
+	DIVIDE = '/',
+	MULTIPLY = '*',
 	EOF = 'EOF'
 
 
-// A Token has a type and value
+// A Token has a type and optionally a value
+// Usage:
+// let plus = new Token('+')
+// let int = new Token(INTEGER, 5)
 const Token = function (type, value) {
+	if (value === undefined) {
+		// If value argument is not passed because the type has only one value
+		// then use the type as the value
+		value = type
+	}
     this.type = type
     this.value = value
 }
@@ -42,7 +52,10 @@ function isNumber(str) {
 }
 
 
-// A Simple Interpreter
+// Usage:
+// const text = '1 + 1'
+// const interpreter = new Interpreter(text)
+// console.log(text.expr()) // 2
 const Interpreter = function (text) {
     // the text of the program
     this.text = text
@@ -93,29 +106,38 @@ Interpreter.prototype.integer = function () {
 // Parse the program text to retrieve the next token
 Interpreter.prototype.getNextToken = function() {
 	while (this.currentChar) {
+		// Spaces
 		if (this.currentChar == ' ') {
 			this.space()
 			continue
 		}
 
+		// Number
 		if (isNumber(this.currentChar)) {
 			return new Token(INT, this.integer())
 		}
 
-		if (this.currentChar === '+') {
-			this.advance()
-			return new Token(PLUS, '+')
-		}
-
-		if (this.currentChar === '-') {
-			this.advance()
-			return new Token(MINUS, '-')
+		// Operator
+		switch (this.currentChar) {
+			case PLUS:
+				this.advance()
+				return new Token(PLUS)
+			case MINUS:
+				this.advance()
+				return new Token(MINUS)
+			case DIVIDE:
+				this.advance()
+				return new Token(DIVIDE)
+			case MULTIPLY:
+				this.advance()
+				return new Token(MULTIPLY)
 		}
 
 		// Unexpected character
 		this.error(`Unexpected character: ${this.currentChar}`)
 	}
 
+	// EOF
 	return new Token(EOF, null)
 }
 
@@ -153,6 +175,11 @@ Interpreter.prototype.expr = function() {
 			return left.value + right.value
 		case MINUS:
 			return left.value - right.value
+		case DIVIDE:
+			// This calculator only knows about integers
+			return Math.floor(left.value / right.value)
+		case MULTIPLY:
+			return left.value * right.value
 		default:
 			this.error(`Unexpected operation ${op.value}`)
 	}
