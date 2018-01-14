@@ -78,6 +78,7 @@ Interpreter.prototype.space = function () {
 }
 
 
+// Read integer from text and return value
 Interpreter.prototype.integer = function () {
 	let result = ''
 	while (isNumber(this.currentChar)) {
@@ -135,7 +136,7 @@ Interpreter.prototype.eat = function (type) {
 // Expressions are one of:
 // 	INT PLUS INT
 // 	INT MINUS INT
-Interpreter.prototype.eval = function() {
+Interpreter.prototype.expr = function() {
     this.currentToken = this.getNextToken()
 
 	const left = this.currentToken
@@ -174,7 +175,7 @@ rl
     // Read lines
     .on('line', line => {
         const interpreter = new Interpreter(line)
-        const result = interpreter.eval()
+        const result = interpreter.expr()
         console.log(result)
         rl.prompt()
     })
