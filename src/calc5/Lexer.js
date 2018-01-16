@@ -1,5 +1,5 @@
 const {Token, types} = require('./Token')
-const {INT, PLUS, MINUS, MULT, DIV} = types
+const {INT, PLUS, MINUS, MULT, DIV, EOF} = types
 
 
 const Lexer = function(text) {
@@ -74,7 +74,9 @@ Lexer.prototype.getNextToken = function() {
 		}
 
 		this.error(this.currentChar)
-	} 
+	}
+
+	return new Token(EOF)
 }
 
 

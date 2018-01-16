@@ -3,7 +3,8 @@ module.exports.types = {
 	PLUS: 'PLUS',
 	MINUS: 'MINUS',
 	MULT: 'MULT',
-	DIV: 'DIV'
+	DIV: 'DIV',
+	EOF: 'EOF'
 }
 
 
