@@ -10,7 +10,7 @@ const Lexer = function(text) {
 
 
 Lexer.prototype.error = function(char) {
-	throw `Unexpected character ${char}`
+	throw new Error(`Unexpected character ${char}`)
 }
 
 
