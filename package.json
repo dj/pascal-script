@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "mocha": "^4.1.0"
+  },
+  "scripts": {
+    "test": "mocha '*/**/*.spec.js'"
+  }
+}

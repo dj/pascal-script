@@ -50,7 +50,7 @@ Lexer.prototype.getNextToken = function() {
 		}
 
 		if (isNumber(this.currentChar)) {
-			return Token(INT, this.int())
+			return new Token(INT, this.int())
 		}
 
 		if (this.currentChar === '+') {
@@ -72,6 +72,8 @@ Lexer.prototype.getNextToken = function() {
 			this.advance()
 			return new Token(DIV)
 		}
+
+		this.error(this.currentChar)
 	} 
 }
 
