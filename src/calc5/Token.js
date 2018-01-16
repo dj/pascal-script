@@ -1,4 +1,4 @@
-module.exports.types = {
+const types = {
 	INT: 'INT',
 	PLUS: 'PLUS',
 	MINUS: 'MINUS',
@@ -8,7 +8,7 @@ module.exports.types = {
 }
 
 
-module.exports.Token = function (type, value) {
+const Token = function (type, value) {
 	if (value === undefined) {
 		value = type
 	}
@@ -17,7 +17,14 @@ module.exports.Token = function (type, value) {
 }
 
 
-module.exports.Token.prototype.toString = function() {
-	return `Token(${this.type}, ${this.value})`
+Token.prototype.toString = function() {
+	switch(this.type) {
+		case types.INT:
+			return `(${this.type}, ${this.value})`
+		default:
+			return this.type
+	}
 }
 
+
+module.exports = { Token, types }
