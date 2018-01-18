@@ -53,4 +53,29 @@ Interpreter.prototype.term = function() {
 }
 
 
+// Arithmetic expression parser / interpreter.
+//  expr   : term ((PLUS | MINUS) term)*
+//  term   : factor ((MUL | DIV) factor)*
+//  factor : INTEGER
+Interpreter.prototype.expr = function() {
+    let result = this.term()
+
+    while ([PLUS, MINUS].includes(this.currentToken.type)) {
+        switch (this.currentToken.type) {
+            case PLUS:
+                this.eat(PLUS)
+                result += this.term()
+                continue
+            case MINUS:
+                this.eat(MINUS)
+                result -= this.term()
+            default:
+                return this.error(this.currentToken.type)
+        }
+    }
+
+    return result
+}
+
+
 module.exports.Interpreter = Interpreter

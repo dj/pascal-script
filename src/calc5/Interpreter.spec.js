@@ -57,4 +57,22 @@ describe('Interpreter', function () {
             )
         })
     })
+
+    describe('expr', function() {
+        it('should consume an expr', function() {
+            const lexer = new Lexer('2 * 3 + 10 / 2')
+            const interpreter = new Interpreter(lexer)
+            const result = interpreter.expr()
+            assert.equal(result, 11)
+        })
+
+        it('should fail to consume a non expr', function() {
+            const lexer = new Lexer('2 + 3 * 5 / 10 +')
+            const interpreter = new Interpreter(lexer)
+            assert.throws(
+                () => interpreter.expr(),
+                /Error: Unexpected token: EOF/
+            )
+        })
+    })
 })
