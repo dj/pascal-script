@@ -23,10 +23,33 @@ Interpreter.prototype.eat = function(type) {
 }
 
 // factor : INT
-Interpreter.prototype.factor = function () {
+Interpreter.prototype.factor = function() {
     const int = this.currentToken
     this.eat(INT)
     return int.value
+}
+
+
+// term : factor ((MUL | DIV) factor)*
+Interpreter.prototype.term = function() {
+    let result = this.factor()
+
+    while([MULT, DIV].includes(this.currentToken.type)) {
+        switch (this.currentToken.type) {
+            case MULT:
+                this.eat(MULT)
+                result = result * this.factor()
+                continue
+            case DIV:
+                this.eat(DIV)
+                result = result / this.factor()
+                continue
+            default:
+                return this.error(this.currentToken.type)
+        }
+    }
+
+    return result
 }
 
 
