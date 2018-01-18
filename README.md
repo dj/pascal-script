@@ -18,7 +18,7 @@ Stretch goal: Rewrite the interpreter part in C and compile to WASM, for the sak
 - [x] Part 2: `src/calc2.js`
 - [x] Part 3: `src/calc3.js`
 - [ ] Part 4
-- [ ] Part 5
+- [x] Part 5: `src/calc5/index.js`
 - [ ] Part 6
 - [ ] Part 7
 - [ ] Part 8
